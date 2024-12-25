@@ -17,7 +17,7 @@ int main()
 {
     cout << unitbuf;
     cerr << unitbuf;
-    vector<string> inshell = {"echo", "type", "exit", "pwd", "cd"};
+    vector<string> shell_commands = {"echo", "type", "exit", "pwd", "cd"};
 
     while (true)
     {
@@ -38,7 +38,7 @@ int main()
 
         if (command == "type")
         {
-            execute_type(args, inshell);
+            execute_type(args, shell_commands);
         }
         else if (command == "echo")
         {
