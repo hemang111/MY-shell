@@ -2,7 +2,7 @@
 #include "shell_util.h"
 #include <iostream>
 #include <filesystem>
-
+#include <regex>
 using namespace std;
 
 void execute_echo(const string &input, const vector<string> &args)

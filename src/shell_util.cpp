@@ -5,7 +5,7 @@
 #include <fstream>
 #include <unistd.h>
 #include <sys/wait.h>
-
+#include <regex>
 using namespace std;
 
 std::string get_path(std::string command)
