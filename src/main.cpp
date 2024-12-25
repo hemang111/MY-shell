@@ -21,6 +21,7 @@ int main()
 
     while (true)
     {
+        
         cout << "$ ";
         string input;
         getline(cin, input);
