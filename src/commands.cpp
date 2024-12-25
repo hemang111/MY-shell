@@ -12,9 +12,9 @@ void execute_echo(const string &input, const vector<string> &args)
     {   vector <string> rs;
         stringstream ss(pr);
         string word;
-        while (ss << word){
-         if(word[0] == '\'' && word[1] == '\'' && word[word.length()-2] == '\'' && word[word.length()-1] == '\''){
-            word = word.substr(2,word.length()-2);
+        while (ss >> word){
+         if(word.substr(0,1) == "\"" && word.substr(word.length()-1) == "\""){
+            word = word.substr(1,word.length()-2);
          } 
          rs.push_back(word);
         }
@@ -23,7 +23,7 @@ void execute_echo(const string &input, const vector<string> &args)
             pr = pr.substr(1, pr.size() - 2); // Remove surrounding quotes
             cout << pr;
         }
-        else if(pr[0] == '\'' && pr[1] == '\''){
+        else if(pr.substr(0,1) == "\""){
            for(auto& rsed : rs){
             cout<<rsed<<" ";
            }

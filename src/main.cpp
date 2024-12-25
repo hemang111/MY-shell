@@ -5,7 +5,7 @@
 #include <cstring>
 #include <string>
 #include <unistd.h>
-#include <sys/wait.h>
+// #include <sys/wait.h>
 #include <regex>
 #include <fstream>
 #include "commands.h"
@@ -58,37 +58,37 @@ int main()
         }
         else 
         {
-            string path = get_path(command);
-            if (path.empty())
-            {
-                cout << command << ": command not found" << endl;
-            }
-            else
-            {
-                vector<char *> c_args;
-                for (auto &arg : args)
-                {
-                    c_args.push_back(&arg[0]);
-                }
-                c_args.push_back(nullptr);
+            // string path = get_path(command);
+            // if (path.empty())
+            // {
+            //     cout << command << ": command not found" << endl;
+            // }
+            // else
+            // {
+            //     vector<char *> c_args;
+            //     for (auto &arg : args)
+            //     {
+            //         c_args.push_back(&arg[0]);
+            //     }
+            //     c_args.push_back(nullptr);
 
-                pid_t pid = fork();
-                if (pid == 0)
-                {
-                    execvp(path.c_str(), c_args.data());
-                    perror("execvp");
-                    exit(EXIT_FAILURE);
-                }
-                else if (pid > 0)
-                {
-                    int status;
-                    waitpid(pid, &status, 0);
-                }
-                else
-                {
-                    perror("fork");
-                }
-            }
+            //     pid_t pid = fork();
+            //     if (pid == 0)
+            //     {
+            //         execvp(path.c_str(), c_args.data());
+            //         perror("execvp");
+            //         exit(EXIT_FAILURE);
+            //     }
+            //     else if (pid > 0)
+            //     {
+            //         int status;
+            //         waitpid(pid, &status, 0);
+            //     }
+            //     else
+            //     {
+            //         perror("fork");
+            //   }
+            //}
         }
     }
 }
