@@ -22,7 +22,7 @@ int main()
     while (true)
     {
             
-         cout << "$ ";
+        cout << "$ ";
         string input;
         getline(cin, input);
 
