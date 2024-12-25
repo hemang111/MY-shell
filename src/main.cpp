@@ -57,7 +57,6 @@ int main()
             execute_cat(input);
         }
         else 
-        
         {
             string path = get_path(command);
             if (path.empty())
