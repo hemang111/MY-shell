@@ -9,11 +9,24 @@ void execute_echo(const string &input, const vector<string> &args)
 {
     string pr = input.substr(5); // Everything after "echo "
     if (args.size() > 1)
-    {
+    {   vector <string> rs;
+        stringstream ss(pr);
+        string word;
+        while (ss << word){
+         if(word[0] == '\'' && word[1] == '\'' && word[word.length()-2] == '\'' && word[word.length()-1] == '\''){
+            word = word.substr(2,word.length()-2);
+         } 
+         rs.push_back(word);
+        }
         if (pr[0] == '\'' && pr[pr.size() - 1] == '\'')
         {
             pr = pr.substr(1, pr.size() - 2); // Remove surrounding quotes
             cout << pr;
+        }
+        else if(pr[0] == '\'' && pr[1] == '\''){
+           for(auto& rsed : rs){
+            cout<<rsed<<" ";
+           }
         }
         else
         {
