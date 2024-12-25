@@ -20,8 +20,7 @@ int main()
     vector<string> shell_commands = {"echo", "type", "exit", "pwd", "cd"};
 
     while (true)
-    {
-            
+    {   
         cout << "$ ";
         string input;
         getline(cin, input);
