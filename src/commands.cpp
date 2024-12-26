@@ -7,42 +7,54 @@ using namespace std;
 void execute_echo(const string &input, const vector<string> &args)
 {
     string pr = input.substr(5); // Everything after "echo "
-    if (args.size() > 1)
+    vector<string> parsed_words;
+    string current_word = "";
+    bool in_quotes = false;
+    char quote_char = '\0';
+
+    // Parse input, respecting quotes
+    for (size_t i = 0; i < pr.size(); ++i)
     {
-        vector<string> rs;
-        stringstream ss(pr);
-        string word;
-        while (ss >> word)
-        {
-            if (word[0] == '"' && word[word.length() - 1] == '"')
-            {
-                word = word.substr(1, word.length() - 2);
-            }
-            else if (word[0] == '\'' && word[word.length() - 1] == '\'')
-            {
-                word = word.substr(1, word.length() - 2);
-            }
+        char ch = pr[i];
 
-            rs.push_back(word);
+        if ((ch == '"' || ch == '\'') && !in_quotes)
+        {
+            in_quotes = true;
+            quote_char = ch;
         }
-
-        // If the entire string is quoted with single or double quotes
-        if ((pr[0] == '\'' && pr[pr.size() - 1] == '\'') || (pr[0] == '"' && pr[pr.size() - 1] == '"'))
+        else if (ch == quote_char && in_quotes)
         {
-            pr = pr.substr(1, pr.size() - 2); // Remove surrounding quotes
-            cout << pr;
+            in_quotes = false;
+            quote_char = '\0';
+        }
+        else if (ch == ' ' && !in_quotes)
+        {
+            if (!current_word.empty())
+            {
+                parsed_words.push_back(current_word);
+                current_word = "";
+            }
         }
         else
         {
-            // Output parsed words
-            for (size_t i = 0; i < rs.size(); ++i)
-            {
-                cout << rs[i] << (i < rs.size() - 1 ? " " : "");
-            }
+            current_word += ch;
         }
-
-        cout << "\n";
     }
+
+    // Add the last word if not empty
+    if (!current_word.empty())
+    {
+        parsed_words.push_back(current_word);
+    }
+
+    // Print the parsed words
+    for (size_t i = 0; i < parsed_words.size(); ++i)
+    {
+        cout << parsed_words[i];
+        if (i < parsed_words.size() - 1)
+            cout << " ";
+    }
+    cout << endl;
 }
 void execute_pwd()
 {
