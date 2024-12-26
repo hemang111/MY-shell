@@ -4,57 +4,43 @@
 #include <filesystem>
 #include <regex>
 using namespace std;
-void execute_echo(const string &input, const vector<string> &args)
+
+void execute_echo(const string &input)
 {
     string pr = input.substr(5); // Everything after "echo "
-    vector<string> parsed_words;
-    string current_word = "";
+    string result = "";
     bool in_quotes = false;
     char quote_char = '\0';
 
-    // Parse input, respecting quotes
     for (size_t i = 0; i < pr.size(); ++i)
     {
         char ch = pr[i];
 
-        if ((ch == '"' || ch == '\'') && !in_quotes)
+        if (!in_quotes && (ch == '"' || ch == '\'')) // Start of quoted string
         {
             in_quotes = true;
             quote_char = ch;
         }
-        else if (ch == quote_char && in_quotes)
+        else if (in_quotes && ch == quote_char) // End of quoted string
         {
             in_quotes = false;
             quote_char = '\0';
         }
-        else if (ch == ' ' && !in_quotes)
+        else if (ch == '\\') // Handle backslash escape
         {
-            if (!current_word.empty())
+            if (i + 1 < pr.size())
             {
-                parsed_words.push_back(current_word);
-                current_word = "";
+                result += pr[i + 1]; // Preserve the next character
+                ++i;
             }
         }
         else
         {
-            current_word += ch;
+            result += ch; // Regular character
         }
     }
 
-    // Add the last word if not empty
-    if (!current_word.empty())
-    {
-        parsed_words.push_back(current_word);
-    }
-
-    // Print the parsed words
-    for (size_t i = 0; i < parsed_words.size(); ++i)
-    {
-        cout << parsed_words[i];
-        if (i < parsed_words.size() - 1)
-            cout << " ";
-    }
-    cout << endl;
+    cout << result << endl;
 }
 void execute_pwd()
 {
@@ -102,18 +88,45 @@ void execute_cd(const vector<string> &args)
 
 void execute_cat(const string &input)
 {
-vector<string> result;
-    string main = input.length() > 3 ? input.substr(4) : "";
+    vector<string> result;
+    string pr = input.substr(4); // Everything after "cat "
+    string current_filename = "";
+    bool in_quotes = false;
+    char quote_char = '\0';
 
-    // Match strings enclosed in either single or double quotes
-    regex quote_regex(R"((['"])(.*?)\1)");
-    smatch matches;
-
-    while (regex_search(main, matches, quote_regex))
+    for (size_t i = 0; i < pr.size(); ++i)
     {
-        string word = matches[2]; // Extract the content within quotes
-        result.push_back(word);
-        main = matches.suffix().str(); // Move to the rest of the string
+        char ch = pr[i];
+
+        if (!in_quotes && (ch == '"' || ch == '\'')) // Start of quoted string
+        {
+            in_quotes = true;
+            quote_char = ch;
+        }
+        else if (in_quotes && ch == quote_char) // End of quoted string
+        {
+            in_quotes = false;
+            result.push_back(current_filename);
+            current_filename = "";
+        }
+        else if (ch == '\\') // Handle backslash escape
+        {
+            if (i + 1 < pr.size())
+            {
+                current_filename += pr[i + 1]; // Preserve the next character
+                ++i;
+            }
+        }
+        else
+        {
+            current_filename += ch; // Regular character
+        }
+    }
+
+    // Add any remaining unquoted filename
+    if (!current_filename.empty())
+    {
+        result.push_back(current_filename);
     }
 
     // Call the cat command with parsed filenames
