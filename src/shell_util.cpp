@@ -8,7 +8,7 @@
 #include <regex>
 using namespace std;
 
-std::string get_path(std::string command)
+string get_path(string command)
 {
     string path_env = getenv("PATH");
     stringstream ss(path_env);
@@ -25,36 +25,36 @@ std::string get_path(std::string command)
     return "";
 }
 
-void cat_command(const std::vector<std::string> &args)
+void cat_command(const vector<string> &args)
 {
     if (args.empty())
     {
-        std::cerr << "Usage: cat <filename1> <filename2> ..." << std::endl;
+        cerr << "Usage: cat <filename1> <filename2> ..." << endl;
         return;
     }
 
     for (const auto &file_name : args)
     {
-        if (!std::filesystem::exists(file_name))
+        if (!filesystem::exists(file_name))
         {
-            std::cerr << file_name << ": No such file or directory" << std::endl;
+            cerr << file_name << ": No such file or directory" << endl;
             continue;
         }
 
-        if (!std::filesystem::is_regular_file(file_name))
+        if (!filesystem::is_regular_file(file_name))
         {
-            std::cerr << file_name << ": Not a regular file" << std::endl;
+            cerr << file_name << ": Not a regular file" << endl;
             continue;
         }
 
-        std::ifstream file(file_name);
+        ifstream file(file_name);
         if (!file)
         {
-            std::cerr << file_name << ": Could not open file" << std::endl;
+            cerr << file_name << ": Could not open file" << endl;
             continue;
         }
-        std::string line;
-        while (std::getline(file, line))
+        string line;
+        while (getline(file, line))
         {
          cout << line;
         }
@@ -62,7 +62,7 @@ void cat_command(const std::vector<std::string> &args)
     }
 }
 
-std::vector<std::string> parse_command(std::string input)
+vector<string> parse_command(string input)
 {
     stringstream ss(input);
     string word;
@@ -74,7 +74,7 @@ std::vector<std::string> parse_command(std::string input)
     return args;
 }
 
-bool check_path(std::string path)
+bool check_path(string path)
 {
     if (filesystem::exists(path) && filesystem::is_directory(path))
     {

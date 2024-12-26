@@ -1,34 +1,73 @@
+# Custom Shell Implementation in C++
+
 [![progress-banner](https://backend.codecrafters.io/progress/shell/f44fef23-4bc3-47db-a63c-1d1b5dbeca14)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
-This is a starting point for C++ solutions to the
-["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
+This project implements a custom shell in C++ that supports basic POSIX commands and features. The shell allows users to run external programs, execute built-in commands like `cd`, `pwd`, `echo`, and `cat`, and interact with the system using command-line inputs.
 
-In this challenge, you'll build your own POSIX compliant shell that's capable of
-interpreting shell commands, running external programs and builtin commands like
-cd, pwd, echo and more. Along the way, you'll learn about shell command parsing,
-REPLs, builtin commands, and more.
+This project is my solution for the [**"Build Your Own Shell" Challenge**](https://app.codecrafters.io/courses/shell/overview). The goal of the challenge is to create a POSIX-compliant shell that can interpret shell commands, execute built-in commands, and run external programs.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+## Features
 
-# Passing the first stage
+- **Built-in Commands**:
+  - `echo`: Outputs text to the terminal.
+  - `pwd`: Displays the current working directory.
+  - `cd`: Changes the current directory to the specified path (or home directory `~`).
+  - `cat`: Displays the contents of a file.
 
-The entry point for your `shell` implementation is in `src/main.cpp`. Study and
-uncomment the relevant code, and push your changes to pass the first stage:
+- **External Commands**: Executes any command available in the system's PATH.
 
-```sh
-git commit -am "pass 1st stage" # any msg
-git push origin master
+- **Command Parsing**: Supports proper handling of argument parsing and quoting, making the shell more flexible and robust.
+
+- **Process Management**: Supports creating and executing processes using `fork()` and `execvp()`.
+
+## Getting Started
+
+### Prerequisites
+
+- C++17 or later
+- A POSIX-compliant operating system (Linux/macOS)
+
+### Installation
+
+1. Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/hemang111/My-shell.git
+   cd My-shell
+   ```
+
+2. Compile the code:
+   ```bash
+   g++ -std=c++17 -o shell main.cpp commands.cpp shell_util.cpp
+   ```
+
+3. Run the shell:
+   ```bash
+   ./shell
+   ```
+
+## Usage
+
+Once the shell starts, you can interact with it using the following commands:
+
+### Built-in Commands:
+
+- **`pwd`**: Displays the current working directory.
+- **`echo 'Hello World!'`**: Prints `Hello World!`.
+- **`cd /path/to/directory`**: Changes the current directory to the specified path.
+- **`cat filename`**: Displays the contents of the specified file.
+
+### External Commands:
+The shell also supports running any external commands available in your system's PATH. For example:
+- **`ls`**: Lists the files in the current directory.
+- **`gcc --version`**: Displays the version of the GCC compiler.
+
+### Exit the Shell:
+To exit the shell, type:
+```bash
+exit 0
 ```
 
-Time to move on to the next stage!
+## License
 
-# Stage 2 & beyond
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Note: This section is for stages 2 and beyond.
-
-1. Ensure you have `cmake` installed locally
-1. Run `./your_program.sh` to run your program, which is implemented in
-   `src/main.cpp`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
