@@ -102,10 +102,10 @@ void execute_cd(const vector<string> &args)
 
 void execute_cat(const string &input)
 {
-    vector<string> result;
+vector<string> result;
     string main = input.length() > 3 ? input.substr(4) : "";
 
-    // Adjust regex to match either single or double quotes
+    // Match single or double quoted file paths
     regex quote_regex(R"(['"]([^'"]*)['"])");
     smatch matches;
 
@@ -116,6 +116,7 @@ void execute_cat(const string &input)
         main = matches.suffix().str();
     }
 
+    // Call the cat command with the extracted filenames
     cat_command(result);
     cout << endl;
 }
