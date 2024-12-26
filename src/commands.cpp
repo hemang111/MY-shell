@@ -145,6 +145,7 @@ void execute_cat(const string &input)
         {
             in_quotes = false;
             current_filename = filter(current_filename);
+            cout << current_filename;
             result.push_back(current_filename);
             current_filename = "";
         }
