@@ -4,13 +4,13 @@
 #include <filesystem>
 #include <regex>
 using namespace std;
-
 void execute_echo(const string &input,const vector<string> &args)
 {
     string pr = input.substr(5); // Everything after "echo "
     string result = "";
     bool in_quotes = false;
     char quote_char = '\0';
+    size_t backslash_count = 0; // To count consecutive backslashes
 
     for (size_t i = 0; i < pr.size(); ++i)
     {
@@ -26,33 +26,42 @@ void execute_echo(const string &input,const vector<string> &args)
             in_quotes = false;
             quote_char = '\0';
         }
-        else if (ch == '\\') // Handle backslash
+        else if (ch == '\\') // Handle backslashes
         {
-            if (i + 1 < pr.size())
-            {
-                char next_char = pr[i + 1];
-                if (next_char == ' ') // Interpret '\ ' as a literal space
-                {
-                    result += ' ';
-                }
-                else
-                {
-                    result += next_char; // Add the next character literally
-                }
-                ++i; // Skip the next character
-            }
-            else
-            {
-                result += ch; // Add the backslash if it’s the last character
-            }
+            backslash_count++; // Increment the backslash count
         }
         else
         {
-            result += ch; // Regular character
+            if (backslash_count > 0) // Handle backslashes before non-backslash characters
+            {
+                if (backslash_count % 2 == 0) // Even number of backslashes -> treat as space
+                {
+                    result += ' '; // Add a single space
+                }
+                else // Odd number of backslashes -> keep the backslashes
+                {
+                    result += string(backslash_count, '\\'); // Preserve the backslashes
+                }
+                backslash_count = 0; // Reset backslash count after processing
+            }
+
+            result += ch; // Add the current character to the result
         }
     }
 
-    cout << result << endl;
+    if (backslash_count > 0) // Handle any trailing backslashes at the end of input
+    {
+        if (backslash_count % 2 == 0) // Even number of backslashes -> treat as space
+        {
+            result += ' '; // Add a single space
+        }
+        else // Odd number of backslashes -> keep the backslashes
+        {
+            result += string(backslash_count, '\\'); // Preserve the backslashes
+        }
+    }
+
+    cout << result << endl; // Print the final result
 }
 
 void execute_pwd()
