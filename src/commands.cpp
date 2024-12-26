@@ -121,7 +121,6 @@ void execute_cd(const vector<string> &args)
         }
     }
 }
-
 void execute_cat(const string &input)
 {
     vector<string> result;
@@ -129,12 +128,22 @@ void execute_cat(const string &input)
     string current_filename = "";
     bool in_quotes = false;
     char quote_char = '\0';
+    bool escaping = false; // Track backslash escape sequences
 
     for (size_t i = 0; i < pr.size(); ++i)
     {
         char ch = pr[i];
 
-        if (!in_quotes && (ch == '"' || ch == '\'')) // Start of quoted string
+        if (escaping) // Handle escaped characters
+        {
+            current_filename += ch; // Add the escaped character
+            escaping = false;       // Reset escaping state
+        }
+        else if (ch == '\\') // Start an escape sequence
+        {
+            escaping = true;
+        }
+        else if (!in_quotes && (ch == '"' || ch == '\'')) // Start of quoted string
         {
             in_quotes = true;
             quote_char = ch;
@@ -145,12 +154,12 @@ void execute_cat(const string &input)
             result.push_back(current_filename);
             current_filename = "";
         }
-        else if (ch == '\\') // Handle backslash escape
+        else if (!in_quotes && ch == ' ') // Space delimiter outside quotes
         {
-            if (i + 1 < pr.size())
+            if (!current_filename.empty())
             {
-                current_filename += pr[i + 1]; // Preserve the next character
-                ++i;
+                result.push_back(current_filename);
+                current_filename = "";
             }
         }
         else
@@ -159,7 +168,7 @@ void execute_cat(const string &input)
         }
     }
 
-    // Add any remaining unquoted filename
+    // Add any remaining filename (unquoted or trailing)
     if (!current_filename.empty())
     {
         result.push_back(current_filename);
@@ -169,6 +178,7 @@ void execute_cat(const string &input)
     cat_command(result);
     cout << endl;
 }
+
 
 void execute_type(const vector<string> &args, const vector<string> &builtins)
 {
