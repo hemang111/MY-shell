@@ -104,7 +104,9 @@ void execute_cat(const string &input)
 {
     vector<string> result;
     string main = input.length() > 3 ? input.substr(4) : "";
-    regex quote_regex("'([^']*)'");
+
+    // Adjust regex to match either single or double quotes
+    regex quote_regex(R"(['"]([^'"]*)['"])");
     smatch matches;
 
     while (regex_search(main, matches, quote_regex))
