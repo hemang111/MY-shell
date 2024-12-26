@@ -5,7 +5,7 @@
 #include <cstring>
 #include <string>
 #include <unistd.h>
-// #include <sys/wait.h>
+#include <sys/wait.h>
 #include <regex>
 #include <fstream>
 #include "commands.h"
