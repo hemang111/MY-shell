@@ -6,63 +6,53 @@
 using namespace std;
 void execute_echo(const string &input,const vector<string> &args)
 {
-    string pr = input.substr(5); // Everything after "echo "
+    string pr = input.substr(5); 
     string result = "";
     bool in_quotes = false;
     char quote_char = '\0';
-    size_t backslash_count = 0; // To count consecutive backslashes
+    size_t backslash_count = 0; 
 
     for (size_t i = 0; i < pr.size(); ++i)
     {
         char ch = pr[i];
 
-        if (!in_quotes && (ch == '"' || ch == '\'')) // Start of quoted string
+        if (!in_quotes && (ch == '"' || ch == '\'')) 
         {
             in_quotes = true;
             quote_char = ch;
         }
-        else if (in_quotes && ch == quote_char) // End of quoted string
+        else if (in_quotes && ch == quote_char)
         {
             in_quotes = false;
             quote_char = '\0';
         }
-        else if (ch == '\\') // Handle backslashes
-        {
-            backslash_count++; // Increment the backslash count
+        else if(ch == '\\' && i != pr.size()-1){
+          backslash_count++;
+          result += ch; 
+          if(backslash_count%2 == 0){
+                for(int i = 0; i < result.length();i++){
+                   if(result[i] == '\\'){
+                    result[i] = ' ';
+                   }
+                }
+            }
         }
         else
         {
-            if (backslash_count > 0) // Handle backslashes before non-backslash characters
-            {
-                if (backslash_count % 2 == 0) // Even number of backslashes -> treat as space
-                {
-                    result += ' '; // Add a single space
+            result += ch; 
+            if(backslash_count%2 == 0){
+                for(int i = 0; i < result.length();i++){
+                   if(result[i] == '\\'){
+                    result[i] = ' ';
+                   }
                 }
-                else // Odd number of backslashes -> keep the backslashes
-                {
-                    result += string(backslash_count, '\\'); // Preserve the backslashes
-                }
-                backslash_count = 0; // Reset backslash count after processing
             }
-
-            result += ch; // Add the current character to the result
-        }
-    }
-
-    if (backslash_count > 0) // Handle any trailing backslashes at the end of input
-    {
-        if (backslash_count % 2 == 0) // Even number of backslashes -> treat as space
-        {
-            result += ' '; // Add a single space
-        }
-        else // Odd number of backslashes -> keep the backslashes
-        {
-            result += string(backslash_count, '\\'); // Preserve the backslashes
         }
     }
 
     cout << result << endl; // Print the final result
 }
+
 
 void execute_pwd()
 {
