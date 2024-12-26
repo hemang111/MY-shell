@@ -230,7 +230,7 @@ void execute_cat(const string &input)
     // {
     //     result.push_back(current_filename);
     // }
-
+    
     // Call the cat command with parsed filenames
     cat_command(result);
     cout << endl;

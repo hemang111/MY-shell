@@ -34,7 +34,8 @@ void cat_command(const std::vector<std::string> &args)
     }
 
     for (const auto &file_name : args)
-    {
+    {   
+        cout << file_name << endl;
         if (!filesystem::exists(file_name))
         {
             cerr << file_name << ": No such file" << endl;
