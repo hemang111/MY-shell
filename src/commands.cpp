@@ -28,19 +28,22 @@ void execute_echo(const string &input,const vector<string> &args)
         }
         else if (ch == '\\') // Handle backslash
         {
-            if (i + 1 < pr.size() && in_quotes)
+            if (i + 1 < pr.size())
             {
-                // Preserve the backslash if followed by a space or backslash
-                if (pr[i + 1] == '\\' || pr[i + 1] == ' ')
+                char next_char = pr[i + 1];
+                if (next_char == ' ') // Interpret '\ ' as a literal space
                 {
-                    result += ch; // Add the backslash
+                    result += ' ';
                 }
-                result += pr[i + 1]; // Add the escaped character
+                else
+                {
+                    result += next_char; // Add the next character literally
+                }
                 ++i; // Skip the next character
             }
             else
             {
-                result += ch; // Add the backslash literally
+                result += ch; // Add the backslash if it’s the last character
             }
         }
         else
