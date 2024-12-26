@@ -27,9 +27,14 @@ void execute_echo(const string &input,const vector<string> &args)
             quote_char = '\0';
         }
         else if(ch == '\\' && i != pr.size()-1){
-          backslash_count++;
+          if(pr[i+1] != ' '){
+            
+          } 
+          else{ 
           result += ch; 
+          backslash_count++;
           int k = 0;
+          if(backslash_count%2 == 0){
                 for(int i = 0; i < result.length();i++){
                    if(result[i] == '\\' && (k%2 != 0 || k == 0)){
                      k++;
@@ -43,12 +48,14 @@ void execute_echo(const string &input,const vector<string> &args)
                     k = 0;
                    }
                 }
-            
+            }
+          }
         }
         else
         {
             result += ch; 
             int k = 0;
+          if(backslash_count%2 == 0){
                 for(int i = 0; i < result.length();i++){
                    if(result[i] == '\\' && (k%2 != 0 || k == 0)){
                     k++;
@@ -68,7 +75,7 @@ void execute_echo(const string &input,const vector<string> &args)
                    }
                 }
             }
-        
+        }
     }
 
     cout << result << endl; // Print the final result
