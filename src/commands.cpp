@@ -4,15 +4,12 @@
 #include <filesystem>
 #include <regex>
 using namespace std;
-void execute_echo(const string &input,const vector<string> &args)
-{
-    string pr = input.substr(5); 
+string filter(string pr){
     string result = "";
     bool in_quotes = false;
     char quote_char = '\0';
     size_t backslash_count = 0; 
-
-    for (size_t i = 0; i < pr.size(); ++i)
+ for (size_t i = 0; i < pr.size(); ++i)
     {
         char ch = pr[i];
 
@@ -73,7 +70,12 @@ void execute_echo(const string &input,const vector<string> &args)
             }
         }
     }
-
+    return result;
+}
+void execute_echo(const string &input,const vector<string> &args)
+{
+    string pr = input.substr(5); 
+    string result = filter(pr);
     cout << result << endl; // Print the final result
 }
 
@@ -121,37 +123,20 @@ void execute_cd(const vector<string> &args)
         }
     }
 }
+
 void execute_cat(const string &input)
 {
-    vector<string> result; // To store parsed filenames
+    vector<string> result;
     string pr = input.substr(4); // Everything after "cat "
     string current_filename = "";
     bool in_quotes = false;
     char quote_char = '\0';
-    bool escaping = false; // Track backslash escape sequences
 
     for (size_t i = 0; i < pr.size(); ++i)
     {
         char ch = pr[i];
 
-        if (escaping) // Handle escape sequences
-        {
-            if (ch == 'n')
-                current_filename += '\n'; // Convert \n to newline
-            else if (ch == 't')
-                current_filename += '\t'; // Convert \t to tab
-            else if (ch == '\\')
-                current_filename += '\\'; // Convert \\ to backslash
-            else
-                current_filename += ch; // Add literal character
-
-            escaping = false; // Reset escaping state
-        }
-        else if (ch == '\\') // Start an escape sequence
-        {
-            escaping = true;
-        }
-        else if (!in_quotes && (ch == '"' || ch == '\'')) // Start of quoted string
+        if (!in_quotes && (ch == '"' || ch == '\'')) // Start of quoted string
         {
             in_quotes = true;
             quote_char = ch;
@@ -159,36 +144,26 @@ void execute_cat(const string &input)
         else if (in_quotes && ch == quote_char) // End of quoted string
         {
             in_quotes = false;
-            result.push_back(current_filename); // Add the parsed filename
+            result.push_back(current_filename);
             current_filename = "";
         }
-        else if (!in_quotes && ch == ' ') // Space delimiter outside quotes
-        {
-            if (!current_filename.empty())
-            {
-                result.push_back(current_filename); // Add the parsed filename
-                current_filename = "";
-            }
-        }
+        
         else
         {
             current_filename += ch; // Regular character
         }
     }
 
-    // Add any remaining filename (unquoted or trailing)
+    // Add any remaining unquoted filename
     if (!current_filename.empty())
     {
         result.push_back(current_filename);
     }
 
-    // Pass the parsed filenames to the cat_command
+    // Call the cat command with parsed filenames
     cat_command(result);
-    cout<<endl;
+    cout << endl;
 }
-
-
-
 
 void execute_type(const vector<string> &args, const vector<string> &builtins)
 {
