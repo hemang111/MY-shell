@@ -134,12 +134,14 @@ void execute_cat(const string &input)
     {
         char ch = pr[i];
 
-        if (escaping) // Handle escaped characters
+        if (escaping) // Handle escape sequences
         {
             if (ch == 'n')
                 current_filename += '\n'; // Convert \n to newline
             else if (ch == 't')
                 current_filename += '\t'; // Convert \t to tab
+            else if (ch == '\\')
+                current_filename += '\\'; // Convert \\ to backslash
             else
                 current_filename += ch; // Add literal character
 
@@ -180,10 +182,11 @@ void execute_cat(const string &input)
         result.push_back(current_filename);
     }
 
-    // Simulate the cat command
+    // Pass the parsed filenames to the cat_command
     cat_command(result);
-    cout << endl;
+    cout<<endl;
 }
+
 
 
 
