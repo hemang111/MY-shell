@@ -34,7 +34,7 @@ void execute_echo(const string &input,const vector<string> &args)
                 for(int i = 0; i < result.length();i++){
                    if(result[i] == '\\' && (k%2 != 0 || k == 0)){
                      k++;
-                    result.erase(i, 2);
+                    result.erase(i, 1);
                 //    cout << result;
                     i++;
                    }
@@ -54,7 +54,7 @@ void execute_echo(const string &input,const vector<string> &args)
                 for(int i = 0; i < result.length();i++){
                    if(result[i] == '\\' && (k%2 != 0 || k == 0)){
                     k++;
-                    result.erase(i, 2);
+                    result.erase(i, 1);
                     // cout << result;
                     i++;
                    }
