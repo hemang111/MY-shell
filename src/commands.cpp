@@ -123,7 +123,7 @@ void execute_cd(const vector<string> &args)
 }
 void execute_cat(const string &input)
 {
-    vector<string> result;
+    vector<string> result; // To store parsed filenames
     string pr = input.substr(4); // Everything after "cat "
     string current_filename = "";
     bool in_quotes = false;
@@ -136,8 +136,14 @@ void execute_cat(const string &input)
 
         if (escaping) // Handle escaped characters
         {
-            current_filename += ch; // Add the escaped character
-            escaping = false;       // Reset escaping state
+            if (ch == 'n')
+                current_filename += '\n'; // Convert \n to newline
+            else if (ch == 't')
+                current_filename += '\t'; // Convert \t to tab
+            else
+                current_filename += ch; // Add literal character
+
+            escaping = false; // Reset escaping state
         }
         else if (ch == '\\') // Start an escape sequence
         {
@@ -151,14 +157,14 @@ void execute_cat(const string &input)
         else if (in_quotes && ch == quote_char) // End of quoted string
         {
             in_quotes = false;
-            result.push_back(current_filename);
+            result.push_back(current_filename); // Add the parsed filename
             current_filename = "";
         }
         else if (!in_quotes && ch == ' ') // Space delimiter outside quotes
         {
             if (!current_filename.empty())
             {
-                result.push_back(current_filename);
+                result.push_back(current_filename); // Add the parsed filename
                 current_filename = "";
             }
         }
@@ -174,10 +180,11 @@ void execute_cat(const string &input)
         result.push_back(current_filename);
     }
 
-    // Call the cat command with parsed filenames
+    // Simulate the cat command
     cat_command(result);
     cout << endl;
 }
+
 
 
 void execute_type(const vector<string> &args, const vector<string> &builtins)
