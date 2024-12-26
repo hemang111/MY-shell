@@ -144,6 +144,7 @@ void execute_cat(const string &input)
         else if (in_quotes && ch == quote_char) // End of quoted string
         {
             in_quotes = false;
+            string current_filename = filter(current_filename);
             result.push_back(current_filename);
             current_filename = "";
         }
