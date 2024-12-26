@@ -213,7 +213,7 @@ void execute_cat(const string &input)
         else if (in_quotes && ch == quote_char) // End of quoted string
         {
             in_quotes = false;
-            current_filename = filter2(current_filename);
+          //  current_filename = filter2(current_filename);
             cout << current_filename;
             result.push_back(current_filename);
             current_filename = "";
