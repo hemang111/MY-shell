@@ -35,7 +35,8 @@ void execute_echo(const string &input,const vector<string> &args)
                    if(result[i] == '\\' && k%2 != 0){
                      k++;
                     result.erase(i, 1);
-
+                    result.erase(i+1,1);
+                    i++;
                    }
                    else if(k%2 == 0 && result[i] ==  '\\'){
                     result[i] = ' ';
