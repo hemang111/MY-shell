@@ -29,39 +29,39 @@ void cat_command(const std::vector<std::string> &args)
 {
     if (args.empty())
     {
-        cerr << "Usage: cat <filename>" << endl;
+        std::cerr << "Usage: cat <filename1> <filename2> ..." << std::endl;
         return;
     }
 
     for (const auto &file_name : args)
-    {   
-        cout << file_name << endl;
-        if (!filesystem::exists(file_name))
+    {
+        if (!std::filesystem::exists(file_name))
         {
-            cerr << file_name << ": No such file" << endl;
+            std::cerr << file_name << ": No such file or directory" << std::endl;
             continue;
         }
 
-        if (!filesystem::is_regular_file(file_name))
+        if (!std::filesystem::is_regular_file(file_name))
         {
-            cerr << file_name << ": Not a regular file" << endl;
+            std::cerr << file_name << ": Not a regular file" << std::endl;
             continue;
         }
 
-        ifstream file(file_name);
-        if (file.is_open())
+        std::ifstream file(file_name);
+        if (!file)
         {
-            string line;
-            while (getline(file, line))
-            {
-                cout << line ;
-            }
-            file.close();
+            std::cerr << file_name << ": Could not open file" << std::endl;
+            continue;
         }
-        else
+
+        std::cout << "---- Contents of " << file_name << " ----" << std::endl;
+        std::string line;
+        while (std::getline(file, line))
         {
-            cerr << file_name << ": Could not open file" << endl;
+            std::cout << line << std::endl;
         }
+        file.close();
+        std::cout << "---------------------------------------" << std::endl;
     }
 }
 
