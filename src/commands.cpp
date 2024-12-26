@@ -23,7 +23,7 @@ string filter2(string pr){
             in_quotes = false;
             quote_char = '\0';
         }
-        else if((ch == '\\' || ch == '\n') &&  i != pr.size()-1){
+        else if((ch == '\\') &&  i != pr.size()-1){
           if(pr[i+1] != ' ') {
             
           }
