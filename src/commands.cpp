@@ -63,12 +63,10 @@ void execute_echo(const string &input,const vector<string> &args)
                     else{
                         k = 0;
                     }
-                    // cout << result;
                     i++;
                    }
                    else if(k%2 == 0 && result[i] ==  '\\' && k != 0){
                     result[i] = ' ';
-                    // cout << result;
                     k = 0;
                    }
                 }
