@@ -105,18 +105,18 @@ void execute_cat(const string &input)
 vector<string> result;
     string main = input.length() > 3 ? input.substr(4) : "";
 
-    // Match single or double quoted file paths
-    regex quote_regex(R"(['"]([^'"]*)['"])");
+    // Match strings enclosed in either single or double quotes
+    regex quote_regex(R"((['"])(.*?)\1)");
     smatch matches;
 
     while (regex_search(main, matches, quote_regex))
     {
-        string word = matches[1];
+        string word = matches[2]; // Extract the content within quotes
         result.push_back(word);
-        main = matches.suffix().str();
+        main = matches.suffix().str(); // Move to the rest of the string
     }
 
-    // Call the cat command with the extracted filenames
+    // Call the cat command with parsed filenames
     cat_command(result);
     cout << endl;
 }
