@@ -28,7 +28,6 @@ string filter2(string pr){
             
           }
           else if(pr[i+1] == 'n'){
-             cout<<"n" << endl;
              i++;
           } 
           else{ 
@@ -227,10 +226,10 @@ void execute_cat(const string &input)
     }
 
     // Add any remaining unquoted filename
-    if (!current_filename.empty())
-    {
-        result.push_back(current_filename);
-    }
+    // if (!current_filename.empty())
+    // {
+    //     result.push_back(current_filename);
+    // }
 
     // Call the cat command with parsed filenames
     cat_command(result);
