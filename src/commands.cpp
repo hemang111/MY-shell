@@ -26,6 +26,9 @@ string filter2(string pr){
         else if((ch == '\\' || ch == '\n') &&  i != pr.size()-1){
           if(pr[i+1] != ' ') {
             
+          }
+          else if(pr[i+1] == 'n'){
+            i++;
           } 
           else{ 
           result += ch; 
