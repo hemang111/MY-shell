@@ -16,7 +16,7 @@ void execute_echo(const string &input, const vector<string> &args)
         {
             if (word[0] == '"' && word[word.length() - 1] == '"')
             {
-                word = word.substr(1, word.length() - 2);s
+                word = word.substr(1, word.length() - 2);
             }
             else if (word[0] == '\'' && word[word.length() - 1] == '\'')
             {
