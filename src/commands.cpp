@@ -5,7 +5,7 @@
 #include <regex>
 using namespace std;
 
-void execute_echo(const string &input ,const vector<string> &args)
+void execute_echo(const string &input,const vector<string> &args)
 {
     string pr = input.substr(5); // Everything after "echo "
     string result = "";
@@ -26,12 +26,21 @@ void execute_echo(const string &input ,const vector<string> &args)
             in_quotes = false;
             quote_char = '\0';
         }
-        else if (ch == '\\') // Handle backslash escape
+        else if (ch == '\\') // Handle backslash
         {
-            if (i + 1 < pr.size())
+            if (i + 1 < pr.size() && in_quotes)
             {
-                result += pr[i + 1]; // Preserve the next character
-                ++i;
+                // Preserve the backslash if followed by a space or backslash
+                if (pr[i + 1] == '\\' || pr[i + 1] == ' ')
+                {
+                    result += ch; // Add the backslash
+                }
+                result += pr[i + 1]; // Add the escaped character
+                ++i; // Skip the next character
+            }
+            else
+            {
+                result += ch; // Add the backslash literally
             }
         }
         else
@@ -42,6 +51,7 @@ void execute_echo(const string &input ,const vector<string> &args)
 
     cout << result << endl;
 }
+
 void execute_pwd()
 {
     try
