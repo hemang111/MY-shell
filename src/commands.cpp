@@ -29,6 +29,7 @@ string filter2(string pr){
           }
           else if(pr[i+1] == 'n'){
             i++;
+            i++;
           } 
           else{ 
           result += ch; 
