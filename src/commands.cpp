@@ -5,7 +5,7 @@
 #include <regex>
 using namespace std;
 
-void execute_echo(const string &input)
+void execute_echo(const string &input ,const vector<string> &args)
 {
     string pr = input.substr(5); // Everything after "echo "
     string result = "";
