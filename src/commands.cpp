@@ -29,10 +29,17 @@ void execute_echo(const string &input,const vector<string> &args)
         else if(ch == '\\' && i != pr.size()-1){
           backslash_count++;
           result += ch; 
+          int k = 0;
           if(backslash_count%2 == 0){
                 for(int i = 0; i < result.length();i++){
-                   if(result[i] == '\\'){
+                   if(result[i] == '\\' && k%2 != 0){
+                     k++;
+                    result.erase(i, 1);
+
+                   }
+                   else if(k%2 == 0 && result[i] ==  '\\'){
                     result[i] = ' ';
+                    k = 0;
                    }
                 }
             }
@@ -40,10 +47,16 @@ void execute_echo(const string &input,const vector<string> &args)
         else
         {
             result += ch; 
-            if(backslash_count%2 == 0){
+            int k = 0;
+          if(backslash_count%2 == 0){
                 for(int i = 0; i < result.length();i++){
-                   if(result[i] == '\\'){
+                   if(result[i] == '\\' && k%2 != 0){
+                     k++;
+                   result.erase(i, 1);
+                   }
+                   else if(k%2 == 0 && result[i] ==  '\\'){
                     result[i] = ' ';
+                    k = 0;
                    }
                 }
             }
