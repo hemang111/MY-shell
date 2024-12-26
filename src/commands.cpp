@@ -24,11 +24,12 @@ string filter2(string pr){
             quote_char = '\0';
         }
         else if((ch == '\\') &&  i != pr.size()-1){
-          if(pr[i+1] != ' ') {
+          if(pr[i+1] != ' ' && pr[i+1] != 'n') {
             
           }
           else if(pr[i+1] == 'n'){
              cout<<"n" << endl;
+             i++;
           } 
           else{ 
           result += ch; 
