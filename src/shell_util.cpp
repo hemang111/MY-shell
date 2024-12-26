@@ -53,15 +53,12 @@ void cat_command(const std::vector<std::string> &args)
             std::cerr << file_name << ": Could not open file" << std::endl;
             continue;
         }
-
-        std::cout << "---- Contents of " << file_name << " ----" << std::endl;
         std::string line;
         while (std::getline(file, line))
         {
-            std::cout << line << std::endl;
+         cout << line;
         }
         file.close();
-        std::cout << "---------------------------------------" << std::endl;
     }
 }
 

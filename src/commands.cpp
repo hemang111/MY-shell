@@ -4,77 +4,6 @@
 #include <filesystem>
 #include <regex>
 using namespace std;
-string filter2(string pr){
-    string result = "";
-    bool in_quotes = false;
-    char quote_char = '\0';
-    size_t backslash_count = 0; 
- for (size_t i = 0; i < pr.size(); i++)
-    {
-        char ch = pr[i];
-
-        if (!in_quotes && (ch == '"' || ch == '\'')) 
-        {
-            in_quotes = true;
-            quote_char = ch;
-        }
-        else if (in_quotes && ch == quote_char)
-        {
-            in_quotes = false;
-            quote_char = '\0';
-        }
-        else if((ch == '\\') &&  i != pr.size()-1){
-          if(pr[i+1] != ' ' && pr[i+1] != 'n') {
-            
-          }
-          else if(pr[i+1] == 'n'){
-             i++;
-          } 
-          else{ 
-          result += ch; 
-          backslash_count++;
-          int k = 0;
-          if(backslash_count%2 == 0){
-                for(int i = 0; i < result.length();i++){
-                   if((result[i] == '\\'  || result[i] == '\n')  && (k%2 != 0 || k == 0)){
-                     k++;
-                    result.erase(i, 1);
-                    i++;
-                   }
-                   else if(k%2 == 0 && (result[i] ==  '\\'  || result[i] == '\n')  && k != 0){
-                    result[i] = ' ';
-                    k = 0;
-                   }
-                }
-            }
-          }
-        }
-        else
-        {
-            result += ch; 
-            int k = 0;
-          if(backslash_count%2 == 0){
-                for(int i = 0; i < result.length();i++){
-                   if((result[i] == '\\' || result[i] == '\n') && (k%2 != 0 || k == 0)){
-                    k++;
-                    if(result[i+1] == ' '){
-                      result.erase(i, 1);
-                    }
-                    else{
-                        k = 0;
-                    }
-                    i++;
-                   }
-                   else if(k%2 == 0 && (result[i] ==  '\\'  || result[i] == '\n') && k != 0){
-                    result[i] = ' ';
-                    k = 0;
-                   }
-                }
-            }
-        }
-    }
-    return result;
-}
 string filter(string pr){
     string result = "";
     bool in_quotes = false;
@@ -213,7 +142,7 @@ void execute_cat(const string &input)
         else if (in_quotes && ch == quote_char) // End of quoted string
         {
             in_quotes = false;
-          //  current_filename = filter2(current_filename);
+            current_filename = filter(current_filename);
             cout << current_filename;
             result.push_back(current_filename);
             current_filename = "";
