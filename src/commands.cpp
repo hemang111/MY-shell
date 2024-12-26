@@ -53,6 +53,26 @@ void execute_echo(const string &input,const vector<string> &args)
         {
             result += ch; 
             int k = 0;
+          if(backslash_count%2 == 0){
+                for(int i = 0; i < result.length();i++){
+                   if(result[i] == '\\' && (k%2 != 0 || k == 0)){
+                    k++;
+                    if(result[i+1] == ' '){
+                      result.erase(i, 1);
+                    }
+                    else{
+                        k = 0;
+                    }
+                    // cout << result;
+                    i++;
+                   }
+                   else if(k%2 == 0 && result[i] ==  '\\' && k != 0){
+                    result[i] = ' ';
+                    // cout << result;
+                    k = 0;
+                   }
+                }
+            }
         }
     }
 
