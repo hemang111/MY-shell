@@ -35,12 +35,12 @@ void execute_echo(const string &input,const vector<string> &args)
                    if(result[i] == '\\' && (k%2 != 0 || k == 0)){
                      k++;
                     result.erase(i, 2);
-                   cout << result;
+                //    cout << result;
                     i++;
                    }
                    else if(k%2 == 0 && result[i] ==  '\\' && k != 0){
                     result[i] = ' ';
-                    cout << result;
+                    // cout << result;
                     k = 0;
                    }
                 }
@@ -52,15 +52,15 @@ void execute_echo(const string &input,const vector<string> &args)
             int k = 0;
           if(backslash_count%2 == 0){
                 for(int i = 0; i < result.length();i++){
-                   if(result[i] == '\\' && k%2 != 0){
+                   if(result[i] == '\\' && (k%2 != 0 || k == 0)){
                     k++;
                     result.erase(i, 2);
-                    cout << result;
+                    // cout << result;
                     i++;
                    }
                    else if(k%2 == 0 && result[i] ==  '\\' && k != 0){
                     result[i] = ' ';
-                    cout << result;
+                    // cout << result;
                     k = 0;
                    }
                 }
