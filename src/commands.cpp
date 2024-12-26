@@ -9,7 +9,7 @@ string filter2(string pr){
     bool in_quotes = false;
     char quote_char = '\0';
     size_t backslash_count = 0; 
- for (size_t i = 0; i < pr.size(); ++i)
+ for (size_t i = 0; i < pr.size(); i++)
     {
         char ch = pr[i];
 
@@ -151,8 +151,6 @@ void execute_echo(const string &input,const vector<string> &args)
     string result = filter(pr);
     cout << result << endl; // Print the final result
 }
-
-
 void execute_pwd()
 {
     try
